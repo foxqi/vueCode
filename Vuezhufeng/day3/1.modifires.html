@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--这样的话，点孙子的话，直接是父亲，在孙子，在儿子出现-->
+    <div @click.capture.stop="parent">parent
+        <div @click.stop="child">child
+            <!--阻止冒泡-->
+          <div @click="grandson">grandson</div>
+        </div>
+    </div>
+    <div @click.once="grandson">5555</div>
+    <div @click.self="grandson">666</div>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         methods:{
+             parent(){
+                 alert('parent')
+             },
+             child(){
+                 alert('child')
+             },
+             grandson(){
+                 alert('grandson')
+             },
+         },
+         data:{
+
+         }
+
+    });
+</script>
+</body>
+</html>

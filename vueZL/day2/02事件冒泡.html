@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div @click="father" class="parent">
+        我是父亲
+        <div @click.stop="son" class="children">
+         我是儿子
+        </div>
+    </div>
+    <a @click.prevent href="http://www.baidu.com">点我跳转链接</a>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+            father(){
+                alert('father')
+            },
+            son(e){
+                //e.stopPropagation();
+                alert('son')
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

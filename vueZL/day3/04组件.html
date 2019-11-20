@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--动态操作dom的属性-->
+    <hello :n="name"></hello>
+</div>
+<div id="app2">
+    <hello></hello>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+    //注册组件-共用组件
+    Vue.component('hello',{
+        // props:['n'],//通过属性接受父组件传过来的数据
+        props:{n:String},//通过属性接受父组件传过来的数据,规定了数据类型，如果不同，则会报错
+        template:'<h1>{{msg}}!{{n}}</h1>',
+        data(){//data函数中，放的就是 "组件自己" 的数据
+            return{msg:'hello11'}
+        }
+    });
+    var app=new Vue({
+        el:'#app',
+        data:{
+            name:'leil'
+        }
+    })
+    var app2=new Vue({
+        el:'#app2'
+    })
+</script>
+</html>

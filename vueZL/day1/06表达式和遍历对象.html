@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--{{}}是表达式，支持 msg 赋值 三目（三元表达式）-->
+    <h1>{{msg}} {{msg=321}} {{bok?"leilei":"ynm"}}</h1>
+    <!--v-html标签进行渲染，{{}}其实是数据渲染-->
+    <div v-html="msg2"></div>
+    <p v-for="(item,index) in obj">{{index}}:{{item}}</p>
+</div>
+<script src="js/vue.js"></script>
+<script>
+
+    var app=new Vue({
+        el:'#app',
+        data:{
+           msg:'hah',
+           bok:false,
+            msg2:'<h1>我是文章的标题</h1>',
+            obj:{
+               name:'ymey',
+                age:13
+            }
+        }
+    })
+</script>
+</body>
+</html>

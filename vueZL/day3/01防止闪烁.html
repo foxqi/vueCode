@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <h2>商品价格：<input type="text" v-model="n">{{n}}</h2>
+    <h2>商品数量：<input type="text" v-model="m">{{m}}</h2>
+    <h2>商品总价：<input type="text" v-model="total">{{total}}</h2>
+</div>
+<script v-cloak src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            msg:"hello!",
+            n:20,
+            m:30,
+        },
+        computed:{
+            //虽然这里放的是函数，但是，可以吧total当做变量来使用；
+            /*total(){//只是得到计算后的结果  getter（得到）
+                return this.n*this.m
+            }*/
+            total:{
+                get:function () {//getter（得到）
+                    return this.n*this.m
+                },
+                set:function (newValue) {
+                    //newValue:变量更新之后的值
+                    // this.n=Math.round(this.total/this.m);//这里的this.total是旧数据
+                    // this.n=Math.round(newValue/this.m);
+                    this.m=Math.round(newValue/this.n);
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

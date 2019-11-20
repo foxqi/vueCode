@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--3.通过router-link来添加路由跳转-->
+    <router-link to="/home">home首页</router-link>
+    <router-link to="/list">list页面</router-link>
+    <router-link to="/detail">详情页</router-link>
+    <!--4:通过router-view 来显示响应组件-->
+    <router-view></router-view>
+</div>
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+    //1.创建一个router实例，并进行配置
+    var router=new  VueRouter({
+        routes:[
+            {path:'/home',component:{
+                template:'<h1>home页面</h1>'
+            }},
+            {path:'/list',component:{
+                template:'<h1>list页面啦啦啦</h1>'
+            }},
+            {path:'/detail',component:{
+                template:'<h1>详情页</h1>'
+            }},
+        ]
+    });
+    //2.配置好的router,放入app实例中
+    var app=new Vue({
+        router,//2.配置好的router,放入app实例中
+        el:"#app",
+    })
+</script>
+</body>
+</html>

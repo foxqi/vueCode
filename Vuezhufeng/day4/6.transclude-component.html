@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <parent>
+
+    </parent>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    /*
+    * <div>parent
+        <div>son
+            <div>grandson</div>
+        </div>
+    </div>
+    * */
+    // let parent={template:'<div>parent>parv>'};
+    // let son={template:'<div>son</div>'};
+    // let grandson={template:'<div>grandson</div>'};
+    var grandson = Vue.extend({
+        template:"<h1>我是孙子</h1>"
+    });
+    var son = Vue.extend({
+        template:"<h1>我是儿子<grandson></grandson></h1>",
+        components:{
+            grandson
+        }
+    });
+     let vm=new Vue({
+         el:'#app',
+         components:{
+             parent:{
+                 template:"<h1>我是父亲<son></son></h1>",
+                 components:{
+                     son
+                 }
+             }
+
+         },
+         data:{
+
+         }
+
+    });
+
+
+
+
+</script>
+</body>
+</html>

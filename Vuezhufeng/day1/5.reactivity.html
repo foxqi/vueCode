@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{arr}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         data:{
+            arr:[1,2,3,4,5]
+         }
+
+    });
+     //不管用：vm.arr[0]=100;//去改变数组中的某一项是监控不到的
+     //不管用：vm.arr.length-=2;//也不能使用改变数组长度的方法
+
+    //变异方法可以使用： pop,push,shift,unshift,sort,reserve,splice
+    vm.arr.reverse()//[ 5, 4, 3, 2, 1 ]
+    vm.arr=vm.arr.map(item=>item*=3);//filter,map赋值给新数组可以改变其值
+</script>
+</body>
+</html>

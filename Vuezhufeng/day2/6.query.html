@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../node_modules/animate.css/animate.css">
+    <style>
+        div>div{
+            width: 100px;
+            height: 100px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="flag=!flag">切换</button>
+    <input type="text" v-model="query">
+    <transition-group enter-active-class="animated bounceInUp" leave-active-class="animated bounceOutDown">
+        <!--key表示区分每一个子元素不同，所以尽量用动态数据不要用死值-->
+        <!--<div v-for="(a,index) in newArr" :key="index">{{a}}</div>--><!--如果选中切换数字，动画效果没有用，它会觉得是同一个元素比如index为0，把已有的保存下来了-->
+        <!--修改办法，只要他的索引不是同一个，他就不会认为他们是同一个-->
+        <div v-for="(a,index) in newArr" :key="Math.random()">{{a}}</div>
+        <!--原理：v-for会默认会复用原理的dom元素，如果加了key，而且key不同他认为就是俩个人了-->
+    </transition-group>
+
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         computed:{
+           newArr(){
+               return this.arr.filter(item=>item==this.query);
+           }
+         },
+         data:{
+             query:'',
+             flag:true,
+             arr:[1,2,3,4,5]
+         }
+
+    });
+</script>
+</body>
+</html>

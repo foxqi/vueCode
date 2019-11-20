@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <tmp1></tmp1>
+    <tmp2></tmp2>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var event=new Vue;//实例身上有  event.$emit  event.$on
+    var app=new Vue({
+        el:'#app',
+        components:{
+                tmp1:{
+                    template:'<h1>组件1 {{msg}}</h1>',
+                    data(){
+                        return {msg:''}
+                    },
+                    mounted(){
+                        //页面一加载进来的时候，就绑定好了
+                        event.$on('leilei',(data)=>{
+                            this.msg=data;
+                        })
+                    }
+                },
+                tmp2:{
+                    template:'<h1 @click="sendData"> 组件2 {{msg}}</h1>',
+                    data(){
+                        return {msg:"hello"}
+                    },
+                    methods:{
+                        sendData(){
+                            //发布数据
+                            event.$emit('leilei',this.msg)
+                        }
+                    }
+                },
+
+        }
+    })
+
+</script>
+</body>
+</html>

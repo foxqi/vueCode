@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="radio" v-model="radio" value="home">home
+    <input type="radio" v-model="radio" value="list">list
+    <!--vue自带标签  template,slot,transition,component-->
+    <!--必须有is属性-->
+
+    <!--如果只是单独用component标签，每切换一次，都会挂载消耗一次，很浪费性能
+     所以需要keep-alive标签，一般用来缓存，为的是后面的路由做准备，如果缓存了就不会在走created  mounted钩子函数
+    -->
+    <keep-alive>
+        <component :is="radio"></component>
+    </keep-alive>
+
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let home={
+        template:'<div>home</div>',
+        mounted(){alert('挂载')},
+        beforeDestroy(){alert('销毁')}
+    };
+    let list={
+        template:'<div>list</div>',
+        mounted(){alert('挂载11')},
+        beforeDestroy(){alert('销毁11')}
+    };
+     let vm=new Vue({
+         el:'#app',
+         components:{
+           home,list
+         },
+         data:{
+             radio:'home'
+         }
+
+    });
+</script>
+</body>
+</html>

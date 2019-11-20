@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="a">
+    {{msg}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+        /* watch:{//只有值变化的时候才会触发，支持异步了,其他情况我们更善于使用computed
+             a(newVal,oldVal){//watch的属性名要和观察的人的名字一致
+                 // console.log(newVal,oldVal)
+                 this.msg='......';//中间状态：在输入的时候会等待，这就是在等待的时候出现的值
+               setTimeout(()=>{
+                   if(newVal.length<3){
+                       return this.msg='太少'
+                   }
+                   if(newVal.length>6){
+                       return this.msg='太多'
+                   }
+                   this.msg='';
+               },100)
+             }
+         },*/
+         data:{
+           msg:'',
+             a:''
+         }
+
+    });
+     //这个方法和上面等价,但是注意this要改成vm
+     vm.$watch('a',(newVal,oldVal)=>{//watch的属性名要和观察的人的名字一致
+         // console.log(newVal,oldVal)
+         vm.msg='......';//中间状态：在输入的时候会等待，这就是在等待的时候出现的值
+         setTimeout(()=>{
+             if(newVal.length<3){
+                 return vm.msg='太少'
+             }
+             if(newVal.length>6){
+                 return vm.msg='太多'
+             }
+             vm.msg='';
+         },100)
+
+     },)
+</script>
+</body>
+</html>

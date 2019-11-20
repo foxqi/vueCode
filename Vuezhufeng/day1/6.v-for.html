@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--以前：拼字符串innerHTML-->
+<!--vue提供了一个指令 v-for 解决循环问题的 更高效 会复用原有的结构-->
+<div id="app">
+    <!--要循环谁，就在谁的身上增加v-for属性 用in 或 of 都可以，但of编辑器报错，所以还是用in比较好-->
+  <!--默认是 value of 数组（value,in） of/in 数组-->
+    <ul>
+      <li v-for="(fruit,index) in fruits">{{index}}{{fruit.name}}
+      <ul>
+          <li v-for="(c,childIndex) in fruit.color">{{index+1}},{{childIndex}}:{{c}}</li>
+      </ul></li>
+  </ul>
+
+    <div v-for="c in 'aaa'">{{c}}</div><!--出现三个a-->
+
+    <div v-for="c in 30">{{c}}</div><!--出现1-30的数字-->
+
+    <div v-for="(value,key,index) in obj">{{index}}{{key}}{{value}}</div>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         data:{
+             obj:{name:'zfpx',age:8,address:'xxx'},
+             fruits:[
+                 {name:'香蕉',color:['green','yellow']},
+                 {name:'苹果',color:['red','green','yellow']},
+                 {name:'西瓜',color:['pink']}
+                 ]
+         }
+
+    });
+</script>
+</body>
+</html>

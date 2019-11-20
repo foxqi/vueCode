@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--所有绑定的方法都是window上的，所以没有外面的自执行函数。并且fn并且要加括号，函数才执行-->
+<div onclick="fn()" id="btn">点我</div>
+<div id="app">
+    <!-- v-on: === @,这里的fn有参数加括号，无参数不用加括号-->
+    <!--如果不传递参数 则不要写括号会自动传入事件源，如果写括号了要手动传入$event属性-->
+ <div @click="fn($event,1)">点我啊啊啊啊</div>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    // (function () {
+        function fn() {
+            alert(1)
+        }
+    // })();
+    console.log(btn.onclick);
+    /*    ƒ onclick(event) {
+            fn()
+            }
+    */
+
+     let vm=new Vue({//根实例
+         el:'#app',
+         data:{//都是数据
+            a:1
+         },
+         methods:{//methods和data中的数据会全部放到vm上，而且名字不能冲突，冲突会报错，methods中的this指向的都是实例，也就是vm
+             fn(event,a){alert(this);console.log(event,this.a)}
+             //fn:()=>alert(this)//不能用箭头函数,指向的为window
+
+         }
+
+    });
+</script>
+</body>
+</html>

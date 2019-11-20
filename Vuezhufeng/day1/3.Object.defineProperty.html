@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="input">
+<script>
+    //手写一个双向数据绑定大概的过程
+    let obj={};
+    let temp={};
+    Object.defineProperty(obj,'name',{
+
+        // configurable:true,//是否可配置或是否可删除
+        // writable:false,//是否可重新赋值
+        // enumerable:true,//是否可枚举，for in 循环
+        // value:1
+        //一般不用上面的方法
+        get(){//取obj的name属性会触发
+           return temp["name"]
+        },
+        set(val){//给obj赋值会触发get方法
+           // console.log(val)
+            temp["name"]=val;//改变temp的结果
+            input.value=val;//将值赋予输入框
+        }
+    });
+    /*for(let key in obj){
+        console.log(key)
+    }*/
+    // obj.name=1000;
+    //delete obj.name//configurable:false可配置就能删，true就不能删
+
+
+    input.value=obj.name;//页面一加载时  会调用get方法
+    input.addEventListener('input',function () {//等待输入框的变化
+       obj.name=this.value; //当值变化时，会调用set方法
+    });
+</script>
+</body>
+</html>

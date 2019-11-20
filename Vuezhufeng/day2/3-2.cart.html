@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <h2 class="text-warning text-center">foxqi购物车</h2>
+        <div class="row">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <!--click点击时  checkbox的状态还没有改变  所以拿到的总是相反的，change可以保证只当值变化后再触发函数-->
+                    <th>全选 <input type="checkbox" v-model="checkAll" ></th>
+                    <td>商品</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>小计</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="(product,index) in products">
+                    <td><input type="checkbox" v-model="product.isSelected"></td>
+                    <td>
+                        <!--:和v-bind等价  指令：动态绑定数据-->
+                        <img :src="product.productCover" :title="product.productName">
+                        {{product.productInfo}}
+                    </td>
+                    <td>{{product.productPrice}}</td>
+                    <td>
+                        <!--.number是让输入框的值变成数字类型，  .lazy当输入框失去焦点时更新数据-->
+                        <input type="number" v-model.number="product.productCount" min="1">
+                    </td>
+                    <!--过滤器  原数据不变的情况下，只是改变显示的效果  管道符 | ，-->
+                    <td>{{product.productCount*product.productPrice | toFixed(2)}}</td>
+                    <td><button class="btn btn-danger" @click="remove(product)">删除</button></td>
+                </tr>
+                <tr>
+                    <!--{{sum()}}这样写  数据一变化就会重新调用此函数  算出最新的结果，不会缓存上一次的结果 computed可以解决这个问题-->
+                    <td colspan="6">总价格:{{sum | toFixed(2)}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<!--基于promise的-->
+<script src="../node_modules/axios/dist/axios.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         //当给全选赋值时，要影响其他人的变化，当页面刷新时，获取全选值，是根据下面的checkbox计算出来的结果给全选赋值
+         computed:{//放在computed中最后也会放在vm上，不能和methods和data重名
+            checkAll:{
+                //当products的值变化时会重新计算
+                get(){//默认值；get 和 set this指向实例 默认v-model会获取checkAll的值，所以会调用get方法
+                    return this.products.every(p=>p.isSelected);
+                },
+                set(val){//更改值；当我们给checkbox赋值的时候
+                   this.products.forEach(p=>p.isSelected=val);//单个的选择checkOne()也不需要了
+                }
+            },
+             sum(){//如何计算属性写成函数 默认调用的就是get方法
+                 return this.products.reduce((prev,next)=>{
+                     if(!next.isSelected) return prev;//如果当前没有被选中，就不加当前这一项
+                     return prev+next.productPrice*next.productCount;
+                 } ,0);
+             }
+            /* sum:{//求和函数,sum的结果会被缓存，如果依赖的数据没有变化就不会重新执行
+                get(){
+                        return this.products.reduce((prev,next)=>{
+                            if(!next.isSelected) return prev;//如果当前没有被选中，就不加当前这一项
+                            return prev+next.productPrice*next.productCount;
+                        } ,0)
+                    },
+             }*/
+         },
+         filters:{//可以有好多的自定义过滤器
+             toFixed(input,param1){//这里的this指向的是window
+                 return '￥'+input.toFixed(param1);//input代表的是管道符前面的内容，param1代表的是toFixed传递的参数
+             }
+         },
+         //专门用来发送ajax的方法
+         created(){//在数据被初始化后会调用，this指向指的也是vm实例,钩子函数
+             this.getData();
+         },
+         methods:{
+
+             getData(){
+                   axios.get('./carts.json').then(res => {//success
+                       this.products=res.data;//获取数据  拿到的需要的是res.data
+                       // console.log(this.products)
+                   },err =>{//error
+                       console.log(err);
+                   })
+             },
+             remove(p){//p代表的是当前点击的这一项
+                 this.products=this.products.filter(item=>item!==p);//尽量不要用splic,他会造成数组塌陷，每删除一个都会减减一次，造成性能浪费，所以用filter性能好一些
+             }
+         },
+         data:{
+           products:[],
+         }
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bg1{
+            background: red;
+        }
+        .bg2{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--<button @click="bok=!bok">变</button>-->
+   <!--<h1 :class="{bg1:bok,bg2:!bok}">你好，圆梦源！！</h1>-->
+
+    <button @click="fn">变1</button>
+   <!--<h1 :class="obj">你好！！</h1>-->
+
+    <h1 :class="[bg1Class,bg2Class]">你好222！！</h1>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            bok:true,
+            obj:{
+                bg1:true,
+                bg2:false,
+            },
+            bg1Class:"bg1",
+            bg2Class:"bg2",
+        },
+        methods:{
+            fn(){
+                this.obj.bg1=false;
+                this.obj.bg2=true;
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

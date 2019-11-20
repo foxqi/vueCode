@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--<h1 :style="{color:col1,background:col2}">www</h1>-->
+    <h1 :style="obj">www</h1>
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            col1: "green",
+            col2: 'red',
+            obj: {
+                color: 'white',
+                background: 'blue'
+            }
+        },
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <style>
+      .a{
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          background: red;
+      }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button v-color="flag">变色</button>
+    <button v-color-put="flag">变色</button>
+    <div v-drag class="a"></div>
+    <div v-drag class="a"></div>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         //多个指令，操作dom的
+         directives:{
+             colorPut(el){
+                alert(el)
+             },
+             //v-color可以不写v-
+             color(el,bingings){//el指代的是button按钮,bingings大部分操作属性值都在这里
+                 console.log(arguments)
+                 el.style.background=bingings.value
+             },
+             drag(el){
+                 el.onmousedown=function (e) {
+                     var disx=e.pageX-el.offsetLeft;
+                     var disy=e.pageY-el.offsetTop;
+                     document.onmousemove=function (e) {
+                         el.style.left=e.pageX-disx+'px';
+                         el.style.top=e.pageY-disy+'px';
+                     };
+                     document.onmouseup=function () {
+                         document.onmousemove=document.onmouseup=null
+                     };
+                     e.preventDefault();
+                 }
+             }
+         },
+         el:'#app',
+         data:{
+            flag:'red'
+         }
+
+    });
+</script>
+</body>
+</html>

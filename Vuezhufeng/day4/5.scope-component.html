@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--3-->
+    <handsome></handsome>
+    <!--上面是自闭合，下面是半闭合-->
+    <!--<component1/>-->
+
+    <component1></component1>
+    <component2></component2>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    //局部组件 使用的三部曲 1.创建这个组件，2.注册这个组件 3.引用这个组件
+    //组件是相互独立的，不能直接跨作用域，vm实例也是一个组件，组件中拥有生命周期函数
+    let obj={school:'qiqi'};//如果组件共用了数据，会导致同时更新（独立性）
+    let handsome={//1.
+        template:'<div>我很英俊11</div>',
+    };
+    //子组件不能直接使用父组件的数据（组件之间的数据交互）
+    //组件理论上可以无限嵌套
+    let component1={
+        // template:'<div @click="school=\'hello\'">组件1 {{school}}</div>',
+        //或者
+        // template:`<div @click="school='hello'">组件1 {{school}}</div>`,
+        template:`<div @click="fn">组件1 {{school}}</div>`,
+        data(){
+            return obj
+        },
+        methods:{
+            fn(){
+                // this指的当前的组件也就是 component
+                this.school='hello1'//也会同时更新
+            }
+        }
+    };
+    let component2={
+        template:'<div>组件2{{school}}</div>',
+        data(){
+            return obj
+        }
+    };
+     let vm=new Vue({
+         el:'#app',
+         components:{
+             handsome,//如果名字和值一样，可以写一个//2.
+             component1,
+             component2,
+         },
+         data:{
+           a:1
+         }
+
+    });
+</script>
+</body>
+</html>

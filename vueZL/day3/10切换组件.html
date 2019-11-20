@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <button @click="comp='zujian1'">显示组件1</button>
+  <button @click="comp='zujian2'">显示组件2</button>
+    <!--component标签是核心，必须要写，它通过is决定显示哪个组件-->
+    <component :is="comp"></component>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            //显示哪个组件
+          comp:'zujian1'
+        },
+        components:{
+            zujian1:{
+                template:'<h1>组件111</h1>'
+            },
+            zujian2:{
+                template:'<h1>组件2</h1>'
+            }
+        }
+    })
+</script>
+</body>
+</html>

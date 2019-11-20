@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="title" class="h3">标题</label>
+                <input type="text" id="title" name="title" class="form-control" v-model="title">
+            </div>
+            <div class="form-group">
+                <label for="content" class="h3">内容</label>
+                <textarea type="text" id="content" name="content"  class="form-control" cols="30" rows="5" v-model="content"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" @click="submit" class="btn btn-primary">提交留言</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <ul class="pagination">
+            <li :class="{active:index==i}" v-for="(item,i) in pages" @click="changePage(i)"><a href="javascript:;">{{item}}</a></li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="(item,i) in ary">
+               <p>[标题]{{item.title}}</p>
+               <p>[内容]{{item.content}}</p>
+               <p>[时间]{{item.time}}</p>
+               <p><a href="#" @click="del(item._id)" class="btn btn-primary">删除</a></p>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
+<script>
+  var app=new Vue({
+      el:'#app',
+      data:{
+         title:"",
+         content:"",
+          pageamount:4,
+          pages:0,
+          index:0,
+          ary:[]
+      },
+      created(){
+          //请求数据
+          this.getData(0);
+          //请求数据的总条数
+          this.$http.get('/count')
+              .then(res=>{
+                 this.pages=Math.ceil(res.body/this.pageamount);
+              })
+      },
+      methods:{
+          submit(){
+              this.$http.post('/post',{
+                  title:this.title,
+                  content:this.content,
+              }).then(res=>{
+                  console.log(res.body)
+              })
+              window.location.href='/';
+          },
+          getData(page){
+              this.$http.get('/get?page='+page+'&pageamount='+this.pageamount)
+                  .then(res=>{
+                      this.ary=res.body;
+                  })
+          },
+          changePage(index){
+              this.getData(index);
+              this.index=index;//点击谁谁亮
+          },
+          del(id){
+              this.$http.get('/del?id='+id)
+                  .then(res=>{
+                      if(res.body.ok){
+                          alert('删除成功');
+                          window.location.href='/';
+                      }
+                  })
+          }
+      }
+  })
+</script>
+</html>

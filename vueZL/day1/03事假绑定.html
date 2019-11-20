@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+    <button @click="reverseMessage">点击按钮翻转文字</button>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{//所有数据都写在data里面
+            msg:'hello,奇ha!'
+        },
+        methods:{//所有的函数都写在methods里
+            reverseMessage(){
+                this.msg=this.msg.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+</body>
+</html>

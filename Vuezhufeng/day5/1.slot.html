@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--这里放的内容均属于父级当前模板的，只有属性名是属于组件的-->
+    <!--中间不能写东西,除非有插槽才能渲染-->
+    <modal m="1">
+        <!--如果没有名字的标签，默认会放置到default中-->
+        <a href="http://www.baidu.com">去百度</a>
+        <p slot="content" @click="fn">亲确认删除吗</p>
+        <h1 slot="title">是否删除？</h1>
+        <a href="http://www.baidu.com">去百度</a>
+    </modal>
+    <!--<modal><span>是否确认？</span></modal>-->
+</div>
+<!--template放在哪里都行，模板中只能放一个根元素，可以通过元素属性定制模板-->
+<template id="modal">
+    <div>
+        <!--slot作用，定制模板-->
+        <!--插槽的作用是为了把模态框组件中保存中间的所有部分不被替换，如果，模态框中间没东西，在slot中可以放默认内容-->
+        <!--slot中可以放置一些默认的内容，如果传递了内容则替换掉-->
+        <slot name="title">默认标题</slot>
+        <slot name="content">默认内容</slot>
+
+        <!--有一个默认的name="default"，如果不写也没事-->
+       <slot name="default">这是一个默认标题</slot>
+
+
+    </div>
+</template>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    let modal={
+        template:'#modal',
+
+    };
+     let vm=new Vue({
+         el:'#app',
+         components:{
+           modal
+         },
+         methods:{
+             fn(){alert(1)}
+         }
+
+    });
+</script>
+</body>
+</html>

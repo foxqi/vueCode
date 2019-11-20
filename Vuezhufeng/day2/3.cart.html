@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<!--基于promise的-->
+<script src="../node_modules/axios/dist/axios.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         //专门用来发送ajax的方法
+         created(){//在数据被初始化后会调用，this指向指的也是vm实例,钩子函数
+             /*axios.get('./carts.json').then(function (res) {//success
+                this.products=res.data;
+             },function (err) {//error
+                 console.log(err);
+             })*/
+         //    上面的是普通函数其实是回调函数，回调函数里面的this是指window，所以要换成箭头函数，箭头函数里面的this指的是实例
+         //    Promise 解决回调问题的
+             axios.get('./carts.json').then(res => {//success
+                this.products=res.data;//获取数据  拿到的需要的是res.data
+                 console.log(this.products)
+             },err =>{//error
+                 console.log(err);
+             })
+         },
+         data:{
+           products:[]
+         }
+
+    });
+</script>
+</body>
+</html>

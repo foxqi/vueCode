@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .x{
+            background: blue;
+        }
+        .y{
+            font-size: 30px;
+        }
+        .z{
+            color: pink;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--:class绑定的样式 和 class绑定的不冲突-->
+    <!--1)对象绑定 {className:isActive}-->
+    <!--<div class="x " :class="{z:flag,y:false}">我还好</div>-->
+    <!--2) 数组绑定:class="[class1,class2,'z']",:class="[class1,class2,{z:false}]-->
+    <div class="x " :class="[class1,class2,'z']">我还好</div>
+    <div class="x " :class="[class1,class2,{z:false}]">我还好</div>
+
+    <div v-for="(a,index) in 10" :class="{x:index%2}">{{a}}</div>
+
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+    //class="a b c", style="background:color"
+    //第一种方式是对象，第二种方式是数组
+     let vm=new Vue({
+         el:'#app',
+         data:{
+             class1:'x',
+             class2:'y',
+            flag:true
+         }
+
+    });
+</script>
+</body>
+</html>

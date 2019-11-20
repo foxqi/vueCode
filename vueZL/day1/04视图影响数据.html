@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="msg">
+    <h1>{{msg}}</h1>
+    <h2 v-once>{{msg}}</h2>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{//所有数据都写在data里面
+            msg:'我是默认数据'
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <!--<input type="text" @keydown.enter="fn">-->
+    <input type="text" @keydown.enter.ctrl="fn">
+
+</div>
+<script src="js/vue.js"></script>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+
+        },
+        methods:{
+            fn(e){
+                // alert(e.keyCode);
+                // if(e.keyCode===13){
+                //     alert('按下enter键')
+                // }
+
+                alert('按下enter键')
+            }
+        }
+
+
+    })
+</script>
+</body>
+</html>

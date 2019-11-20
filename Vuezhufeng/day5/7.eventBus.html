@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <brother1></brother1>
+    <brother2></brother2>
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<!--事件车，简单的页面用这个，不需要用vuex-->
+<script>
+    let EveneBus=new Vue;
+    let brother1={
+       template:'<div>{{color}} <button @click="change">变绿</button></button></div>' ,
+        data(){
+           return {color:'绿色',old:'绿色'}
+        },
+        created(){
+            EveneBus.$on('changeRed',(val)=>{//页面一加载兄弟1长个耳朵听
+               this.color=val;
+           })
+        },
+        methods:{
+            change(){
+                EveneBus.$emit('changeGreen',this.old)
+            }
+        }
+    };
+    let brother2={
+        template:'<div>{{color}} <button @click="change">变红</button></button></div>',
+        created(){
+            EveneBus.$on('changeGreen',(val)=>{
+                this.color=val;
+            })
+        },
+        data(){
+            return {color:'红色',old:'红色'}
+        },
+        methods:{
+            change(){
+                EveneBus.$emit('changeRed',this.old)
+            }
+        }
+    };
+     let vm=new Vue({
+         el:'#app',
+         components:{
+           brother1,brother2
+         },
+         data:{
+
+         }
+
+    });
+</script>
+</body>
+</html>

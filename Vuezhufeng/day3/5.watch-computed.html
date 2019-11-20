@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="val">{{fullName}}
+</div>
+<script src="../node_modules/vue/dist/vue.js"></script>
+<script>
+     let vm=new Vue({
+         el:'#app',
+         /*watch:{//但如果firstName改变了，fullName就没有改变刚才打印的缓存。所以不适合用watch
+             val(newVal){
+                 this.fullName=this.firstName+newVal+this.lastName;
+             },
+
+         },*/
+         computed:{
+              fullName(){
+                 return this.firstName+this.val+this.lastName;
+              }
+         },
+         data:{
+             firstName:'foxqi',
+             lastName:'zhangqi',
+             val:'',//foxqi-val-zhangqi
+             // fullName:''
+         }
+
+    });
+</script>
+</body>
+</html>

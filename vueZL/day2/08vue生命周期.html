@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{msg}}</h1>
+    <button @click="fn">点击更新内容</button>
+</div>
+<script src="js/vue.js"></script>
+<script>
+   var app=new Vue({
+       el:'#app',
+       data:{
+           msg:'圆梦源'
+       },
+       methods:{
+         fn(){
+             this.msg='蕾蕾的那些花儿'
+           }
+       },
+       beforeCreate(){
+         alert('beforeCreate创建前')
+       },
+       created(){
+           alert('created创建后')
+       },
+       beforeMount(){
+           alert('beforeMount挂载前')
+       },
+       mounted(){
+           alert('mounted挂载后')
+       },
+       beforeUpdate(){
+           alert('beforeUpdate更新前')
+       },
+       updated(){
+           alert('updated更新后')
+       },
+       beforeDestroy(){
+           alert('beforeDestroy销毁前')
+       },
+       destroyed(){
+           alert('destroyed销毁后')
+       }
+
+   })
+    app.$destroy();//手动销毁
+</script>
+</body>
+</html>

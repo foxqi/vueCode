@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <form action="">
+            <div class="form-group">
+                <label for="query"> <h1>百度搜索框</h1></label>
+                <input @keydown="query" @keydown.down="moveDown" @keydown.up.prevent="moveUp" type="text" class="form-control" id="query" @keydown.enter="search" v-model="msg">
+            </div>
+        </form>
+        <ul class="list-group">
+            <li class="list-group-item " :class="{active:index==i}" v-for="(item,i) in ary">{{item}}</li>
+        </ul>
+    </div>
+</div>
+<script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
+<script>
+     var app=new Vue({
+         el:"#app",
+         data:{
+             msg:'',
+             ary:[],
+             index:0
+         },
+         methods:{
+             query(e){
+                 //jsonp的请求
+                 if(e.keyCode==38 || e.keyCode==40) return;
+                 this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",{
+                     params:{
+                         wd:this.msg
+                     },
+                     jsonp:'cb'
+                 })
+                     .then(res=>{
+                      // console.log(res.body.s)
+                         this.ary=res.body.s;
+                 })
+             },
+             moveDown(){
+                 this.index++;
+                 this.index%=this.ary.length;
+                 //输入框中的文字变选中的文字
+                 this.msg=this.ary[this.index];
+             },
+             moveUp(){
+                 this.index--;
+                 //正数不能用%，%只能用于正数
+                 if(this.index<=-1){
+                     this.index=this.ary.length-1;
+                 }
+                 this.msg=this.ary[this.index];
+             },
+             search(){
+                 window.open(`https://www.baidu.com/s?wd=${this.msg}`,"_blank")
+
+             }
+         }
+     })
+</script>
+</body>
+</html>
